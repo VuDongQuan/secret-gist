@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Khảo sát</title>
+  <style>
+    :root {
+      color-scheme: dark; --bg:#0b1020; --panel:#151c30; --text:#f4f7ff;
+      --muted:#aab5cc; --accent:#c4b5fd; --danger:#fca5a5; --border:#303b55;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; min-height:100vh; padding:20px; display:grid; place-items:center;
+      background:radial-gradient(ellipse at top,#252044 0%,var(--bg) 58%);
+      color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    }
+    main {
+      width:min(100%,700px); padding:clamp(22px,5vw,40px); border:1px solid var(--border);
+      border-radius:24px; background:rgba(21,28,48,.97); box-shadow:0 24px 80px #0005;
+    }
+    .eyebrow { margin:0 0 10px; color:var(--accent); font-size:.8rem; font-weight:750; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { margin:0; font-size:clamp(1.8rem,5vw,2.5rem); line-height:1.1; }
+    .intro { margin:14px 0 26px; color:var(--muted); line-height:1.65; }
+    form { display:flex; gap:10px; }
+    input {
+      min-width:0; flex:1; padding:15px 16px; border-radius:12px; border:1px solid #465474;
+      background:#0d1426; color:var(--text); font:inherit; outline:none;
+    }
+    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px #c4b5fd2b; }
+    button {
+      padding:15px 20px; border:0; border-radius:12px; background:var(--accent);
+      color:#17132b; font:inherit; font-weight:750; cursor:pointer;
+    }
+    button:hover { filter:brightness(1.07); }
+    #message { min-height:1.5em; margin:12px 0 0; color:var(--danger); line-height:1.5; }
+    #result { margin-top:24px; }
+    #videoTitle { margin:0 0 12px; font-size:1.15rem; }
+    .player { overflow:hidden; border-radius:14px; background:#05070c; border:1px solid var(--border); aspect-ratio:16/9; }
+    .player iframe,.player video { display:block; width:100%; height:100%; border:0; }
+    .hidden { display:none!important; }
+    .hint { margin-top:24px; color:var(--muted); font-size:.85rem; line-height:1.6; }
+    @media(max-width:480px) { body{padding:12px} main{border-radius:18px} form{flex-direction:column} button{width:100%} }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Học sinh được yêu cầu thực hiện bài khảo sát.</p>
+    <h1>Vui lòng nhập tên của bạn.</h1>
+    <p class="intro">Thí sinh vui lòng nhập đúng và đủ họ và tên nếu không sẽ không thể truy cập.</p>
+    <form id="codeForm">
+      <input id="codeInput" name="code" type="text" placeholder="Nhập tên."
+             autocomplete="off" autocapitalize="words" aria-label="Tên của bạn." maxlength="30" required>
+      <button type="submit">Bắt đầu ↗</button>
+    </form>
+    <p id="message" role="status" aria-live="polite"></p>
+    <section id="result" class="hidden" aria-live="polite">
+      <h2 id="videoTitle"></h2>
+      <div class="player" id="player"></div>
+    </section>
+    <p class="hint">Nếu tên chưa đúng, hãy kiểm tra rồi thử lại. Trang này dùng tên của bạn để tổng hợp kết quả khảo sát, không phải hệ thống bảo mật.</p>
+  </main>
+
+  <script>
+    
+    const VIDEOS = {
+      "lê an na":  { title: "Tặng An Na 💌",  type: "drive", url: "https://drive.google.com/file/d/1x08EILn66bvF7pnvZnZVDK-NAzxPl1aY/preview" },
+      "nguyễn lục phương giang":  { title: "Tặng Phương Giang 💌",  type: "drive", url: "https://drive.google.com/file/d/1lZvMcH0MQfs5s9n3e3O-WSQgi1Q342Np/preview" },
+      "nguyễn thị huệ":  { title: "Tặng cô Huệ 💌",  type: "drive", url: "https://drive.google.com/file/d/1RXMjoi-fIY0UkAM-XDekj8Lor_rw5UXE/preview" },
+      "lê ngọc khanh":  { title: "Tặng Ngọc Khanh 💌",  type: "drive", url: "https://drive.google.com/file/d/158W755EnoEdNZkKJktYMK0ybxQcqD8rD/preview" },
+      "nguyễn thùy lâm":  { title: "Tặng Thùy Lâm 💌",  type: "drive", url: "https://drive.google.com/file/d/1V7xWxwljGVB_Gq5I5gRnwQG8vHK2DjH0/preview" },
+      "đỗ phương nhung":  { title: "Tặng Phương Nhung 💌",  type: "drive", url: "https://drive.google.com/file/d/11T8WDT7lT5eg9hIKkJnhlcsHsXh5wrsY/preview" },
+      "nguyễn bảo ngọc":  { title: "Tặng Nguyễn Bảo Ngọc 💌",  type: "drive", url: "https://drive.google.com/file/d/1vOin-cEDna9UydOBPjEgzOmK7QT9uQ80/preview" },
+      "phạm huỳnh bảo ngọc":  { title: "Tặng Phạm Huỳnh Bảo Ngọc 💌",  type: "drive", url: "https://drive.google.com/file/d/17P7dS2eT90aaFEMkdbIp5XkjaOlfS09J/preview" },
+      "phạm hoàng bảo như":  { title: "Tặng Bảo Như 💌",  type: "drive", url: "https://drive.google.com/file/d/1Mnmuf71IlsfpsIoP91zsf5L3B_bMiPl-/preview" },
+      "nguyễn ngọc quỳnh như":  { title: "Tặng Quỳnh Như 💌",  type: "drive", url: "https://drive.google.com/file/d/1yMg192bRNsEh_D21wOkvYH5RsSFIr2NI/preview" },
+      "vương minh châu":  { title: "Tặng Minh Châu 💌",  type: "drive", url: "https://drive.google.com/file/d/1RNpFUhMEowk_7_f4kA8yPMFyqGIeQOwP/preview" },
+      "châu nguyễn uyên thanh":  { title: "Tặng Uyên Thanh 💌",  type: "drive", url: "https://drive.google.com/file/d/1blDmBen8bMSLhaVt2Q5DeW1QxRFfkwGq/preview" },
+      "nguyễn khánh tâm":  { title: "Tặng Khánh Tâm",  type: "drive", url: "https://drive.google.com/file/d/1ec9LoMOEDISRcqieU1Giql_1KaNJchbY/preview" },
+      "phạm huỳnh song thư":  { title: "Tặng Song Thư 💌",  type: "drive", url: "https://drive.google.com/file/d/1WQAGES-gnkz9WfhWWr6ZIchDb4SJbGOV/preview" },
+      "vương ánh tây":  { title: "Tặng Ánh Tây 💌",  type: "drive", url: "https://drive.google.com/file/d/1VRKtJzzSSd2WtLjtVIDzifl_mb4mt2O2/preview" },
+      "trần ngọc tú vy":  { title: "Tặng Tú Vy 💌",  type: "drive", url: "https://drive.google.com/file/d/1LLtsmpG9f0pmnUv_NkmyOsPGnFZnzmKU/preview" },
+      "nguyễn khánh vy":  { title: "Tặng Khánh Vy 💌",  type: "drive", url: "https://drive.google.com/file/d/1DFqgelsqkY5gxEF_5ATPXm4QZarhYNMO/preview" },
+      "nguyễn trúc vy":  { title: "Tặng Trúc Vy 💌",  type: "drive", url: "https://drive.google.com/file/d/1zt7ELyZbucv22SyOh7mRWiyTEZe1XtI_/preview" },
+      "đỗ hoàng yến":  { title: "Tặng Hoàng Yến 💌",  type: "drive", url: "https://drive.google.com/file/d/1PIdOMwZmWLjlNIsyTAQenHkD_UonvDgl/preview" },
+      "uông hoàng yến vy":  { title: "Tặng Yến Vy 💌",  type: "drive", url: "https://drive.google.com/file/d/1QLkxnMDMgaJ5rURfu6S7yLA7X7iS83-_/preview" }
+    };
+
+    const form = document.getElementById("codeForm");
+    const input = document.getElementById("codeInput");
+    const message = document.getElementById("message");
+    const result = document.getElementById("result");
+    const title = document.getElementById("videoTitle");
+    const player = document.getElementById("player");
+
+    function showVideo(code) {
+      const video = VIDEOS[code];
+      player.replaceChildren();
+
+      if (!video) {
+        result.classList.add("hidden");
+        message.textContent = "Không tồn tại tên này.";
+        return;
+      }
+
+      if (!video.url || video.url.startsWith("PASTE_")) {
+        result.classList.add("hidden");
+        message.textContent = "Không tồn tại tên này.";
+        return;
+      }
+
+      title.textContent = video.title;
+
+      if (video.type === "mp4") {
+        const media = document.createElement("video");
+        media.controls = true;
+        media.playsInline = true;
+        media.preload = "metadata";
+        media.src = video.url;
+        player.appendChild(media);
+      } else {
+        const frame = document.createElement("iframe");
+
+	const separator = video.url.includes("?") ? "&" : "?";
+        frame.src = video.url + separator + "autoplay=1";
+        frame.title = video.title;
+        frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.allowFullscreen = true;
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+
+        player.appendChild(frame);
+      }
+
+      message.textContent = "";
+      result.classList.remove("hidden");
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      showVideo(input.value.trim().toLocaleLowerCase("vi"));
+    });
+  </script>
+</body>
+</html>
