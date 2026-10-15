@@ -6,43 +6,229 @@
   <meta name="theme-color" content="#111827">
   <title>Khảo sát</title>
   <style>
-    :root {
-      color-scheme: dark; --bg:#0b1020; --panel:#151c30; --text:#f4f7ff;
-      --muted:#aab5cc; --accent:#c4b5fd; --danger:#fca5a5; --border:#303b55;
+  :root {
+    color-scheme: dark;
+    --bg: #090d1b;
+    --panel: #151a2c;
+    --text: #f5f2ff;
+    --muted: #aab3cc;
+    --accent: #c8b6ff;
+    --danger: #fca5a5;
+    --border: #ffffff18;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px 16px;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(ellipse at 50% 0%, #332650 0%, transparent 48%),
+      linear-gradient(160deg, #0c1121, #080b16 80%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  main {
+    width: min(100%, 620px);
+    padding: clamp(24px, 5vw, 40px);
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    background: linear-gradient(
+      145deg,
+      rgba(27, 32, 54, .97),
+      rgba(17, 22, 39, .98)
+    );
+    box-shadow: 0 24px 75px #0006;
+  }
+
+  .eyebrow {
+    margin: 0 0 14px;
+    color: var(--accent);
+    font-size: .75rem;
+    font-weight: 750;
+    letter-spacing: .12em;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.85rem, 5vw, 2.5rem);
+    line-height: 1.18;
+    letter-spacing: -.035em;
+  }
+
+  .intro {
+    margin: 16px 0 28px;
+    color: var(--muted);
+    font-size: .96rem;
+    line-height: 1.8;
+  }
+
+  form {
+    display: flex;
+    gap: 10px;
+  }
+
+  input {
+    min-width: 0;
+    flex: 1;
+    padding: 15px 16px;
+    border: 1px solid #465171;
+    border-radius: 14px;
+    background: #0c1120;
+    color: var(--text);
+    font: inherit;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  input::placeholder {
+    color: #818ba5;
+  }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px #c8b6ff1c;
+  }
+
+  button {
+    padding: 15px 21px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ded2ff, #bca6fa);
+    color: #211831;
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+    transition: filter .2s, transform .15s;
+  }
+
+  button:hover {
+    filter: brightness(1.08);
+  }
+
+  button:active {
+    transform: scale(.98);
+  }
+
+  #message {
+    min-height: 0;
+    margin: 8px 0 0;
+    color: var(--danger);
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+
+  #result {
+    margin-top: 22px;
+    animation: appear .35s ease both;
+  }
+
+  #videoTitle {
+    margin: 0 0 14px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+
+  .player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #ffffff20;
+    border-radius: 16px;
+    background: #05070c;
+    box-shadow: 0 12px 30px #0003;
+  }
+
+  .player iframe,
+  .player video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .hint {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #ffffff12;
+    color: var(--muted);
+    font-size: .83rem;
+    line-height: 1.75;
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
     }
-    * { box-sizing:border-box; }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 480px) {
     body {
-      margin:0; min-height:100vh; padding:20px; display:grid; place-items:center;
-      background:radial-gradient(ellipse at top,#252044 0%,var(--bg) 58%);
-      color:var(--text); font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      padding: 16px 12px;
+      place-items: start center;
     }
+
     main {
-      width:min(100%,700px); padding:clamp(22px,5vw,40px); border:1px solid var(--border);
-      border-radius:24px; background:rgba(21,28,48,.97); box-shadow:0 24px 80px #0005;
+      padding: 25px 20px;
+      border-radius: 23px;
     }
-    .eyebrow { margin:0 0 10px; color:var(--accent); font-size:.8rem; font-weight:750; letter-spacing:.14em; text-transform:uppercase; }
-    h1 { margin:0; font-size:clamp(1.8rem,5vw,2.5rem); line-height:1.1; }
-    .intro { margin:14px 0 26px; color:var(--muted); line-height:1.65; }
-    form { display:flex; gap:10px; }
-    input {
-      min-width:0; flex:1; padding:15px 16px; border-radius:12px; border:1px solid #465474;
-      background:#0d1426; color:var(--text); font:inherit; outline:none;
+
+    .intro {
+      margin-bottom: 23px;
     }
-    input:focus { border-color:var(--accent); box-shadow:0 0 0 3px #c4b5fd2b; }
+
+    form {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input,
     button {
-      padding:15px 20px; border:0; border-radius:12px; background:var(--accent);
-      color:#17132b; font:inherit; font-weight:750; cursor:pointer;
+      width: 100%;
+      min-height: 52px;
     }
-    button:hover { filter:brightness(1.07); }
-    #message { min-height:1.5em; margin:12px 0 0; color:var(--danger); line-height:1.5; }
-    #result { margin-top:24px; }
-    #videoTitle { margin:0 0 12px; font-size:1.15rem; }
-    .player { overflow:hidden; border-radius:14px; background:#05070c; border:1px solid var(--border); aspect-ratio:16/9; }
-    .player iframe,.player video { display:block; width:100%; height:100%; border:0; }
-    .hidden { display:none!important; }
-    .hint { margin-top:24px; color:var(--muted); font-size:.85rem; line-height:1.6; }
-    @media(max-width:480px) { body{padding:12px} main{border-radius:18px} form{flex-direction:column} button{width:100%} }
-  </style>
+
+    #result {
+      margin-top: 20px;
+    }
+
+    #videoTitle {
+      font-size: 1.15rem;
+    }
+
+    .player {
+      border-radius: 14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+
 </head>
 <body>
   <main>
