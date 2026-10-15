@@ -315,7 +315,7 @@
         const frame = document.createElement("iframe");
 
 	const separator = video.url.includes("?") ? "&" : "?";
-        frame.src = video.url + separator + "autoplay=1";
+        frame.src = video.url;
         frame.title = video.title;
         frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         frame.allowFullscreen = true;
