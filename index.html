@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="vi">
 <head>
@@ -5,279 +6,546 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111827">
   <title>Khảo sát</title>
+
   <style>
-  :root {
-    color-scheme: dark;
-    --bg: #090d1b;
-    --panel: #151a2c;
-    --text: #f5f2ff;
-    --muted: #aab3cc;
-    --accent: #c8b6ff;
-    --danger: #fca5a5;
-    --border: #ffffff18;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    padding: 24px 16px;
-    display: grid;
-    place-items: center;
-    background:
-      radial-gradient(ellipse at 50% 0%, #332650 0%, transparent 48%),
-      linear-gradient(160deg, #0c1121, #080b16 80%);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont,
-      "Segoe UI", sans-serif;
-  }
-
-  main {
-    width: min(100%, 620px);
-    padding: clamp(24px, 5vw, 40px);
-    border: 1px solid var(--border);
-    border-radius: 26px;
-    background: linear-gradient(
-      145deg,
-      rgba(27, 32, 54, .97),
-      rgba(17, 22, 39, .98)
-    );
-    box-shadow: 0 24px 75px #0006;
-  }
-
-  .eyebrow {
-    margin: 0 0 14px;
-    color: var(--accent);
-    font-size: .75rem;
-    font-weight: 750;
-    letter-spacing: .12em;
-    line-height: 1.7;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: clamp(1.85rem, 5vw, 2.5rem);
-    line-height: 1.18;
-    letter-spacing: -.035em;
-  }
-
-  .intro {
-    margin: 16px 0 28px;
-    color: var(--muted);
-    font-size: .96rem;
-    line-height: 1.8;
-  }
-
-  form {
-    display: flex;
-    gap: 10px;
-  }
-
-  input {
-    min-width: 0;
-    flex: 1;
-    padding: 15px 16px;
-    border: 1px solid #465171;
-    border-radius: 14px;
-    background: #0c1120;
-    color: var(--text);
-    font: inherit;
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-
-  input::placeholder {
-    color: #818ba5;
-  }
-
-  input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px #c8b6ff1c;
-  }
-
-  button {
-    padding: 15px 21px;
-    border: 0;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #ded2ff, #bca6fa);
-    color: #211831;
-    font: inherit;
-    font-weight: 750;
-    cursor: pointer;
-    transition: filter .2s, transform .15s;
-  }
-
-  button:hover {
-    filter: brightness(1.08);
-  }
-
-  button:active {
-    transform: scale(.98);
-  }
-
-  #message {
-    min-height: 0;
-    margin: 8px 0 0;
-    color: var(--danger);
-    font-size: .9rem;
-    line-height: 1.6;
-  }
-
-  #result {
-    margin-top: 22px;
-    animation: appear .35s ease both;
-  }
-
-  #videoTitle {
-    margin: 0 0 14px;
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-
-  
-.player {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid #ffffff20;
-  border-radius: 16px;
-  background: #000;
-  background-clip: padding-box;
-  box-shadow: 0 12px 30px #0003;
-}
-
-.player iframe,
-.player video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  border-radius: inherit;
-}
-
-
-
-  .hidden {
-    display: none !important;
-  }
-
-  .hint {
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px solid #ffffff12;
-    color: var(--muted);
-    font-size: .83rem;
-    line-height: 1.75;
-  }
-
-  @keyframes appear {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
+    :root {
+      color-scheme: dark;
+      --bg: #090d1b;
+      --panel: #151a2c;
+      --text: #f5f2ff;
+      --muted: #aab3cc;
+      --accent: #c8b6ff;
+      --danger: #fca5a5;
+      --border: #ffffff18;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 
-  @media (max-width: 480px) {
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      padding: 16px 12px;
-      place-items: start center;
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 16px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, #332650 0%, transparent 48%),
+        linear-gradient(160deg, #0c1121, #080b16 80%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
     }
 
     main {
-      padding: 25px 20px;
-      border-radius: 23px;
+      width: min(100%, 620px);
+      padding: clamp(24px, 5vw, 40px);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      background: linear-gradient(
+        145deg,
+        rgba(27, 32, 54, .97),
+        rgba(17, 22, 39, .98)
+      );
+      box-shadow: 0 24px 75px #0006;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: .75rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.85rem, 5vw, 2.5rem);
+      line-height: 1.18;
+      letter-spacing: -.035em;
     }
 
     .intro {
-      margin-bottom: 23px;
+      margin: 16px 0 28px;
+      color: var(--muted);
+      font-size: .96rem;
+      line-height: 1.8;
     }
 
     form {
-      flex-direction: column;
+      display: flex;
       gap: 10px;
     }
 
-    input,
+    input {
+      min-width: 0;
+      flex: 1;
+      padding: 15px 16px;
+      border: 1px solid #465171;
+      border-radius: 14px;
+      background: #0c1120;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input::placeholder {
+      color: #818ba5;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px #c8b6ff1c;
+    }
+
     button {
-      width: 100%;
-      min-height: 52px;
+      padding: 15px 21px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ded2ff, #bca6fa);
+      color: #211831;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+      transition: filter .2s, transform .15s;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+
+    button:active {
+      transform: scale(.98);
+    }
+
+    button:disabled {
+      cursor: default;
+      opacity: .8;
+    }
+
+    #message {
+      min-height: 0;
+      margin: 8px 0 0;
+      color: var(--danger);
+      font-size: .9rem;
+      line-height: 1.6;
     }
 
     #result {
-      margin-top: 20px;
+      margin-top: 22px;
+      animation: appear .35s ease both;
     }
 
     #videoTitle {
-      font-size: 1.15rem;
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+      line-height: 1.5;
     }
 
     .player {
-      border-radius: 14px;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid #ffffff20;
+      border-radius: 16px;
+      background: #000;
+      background-clip: padding-box;
+      box-shadow: 0 12px 30px #0003;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: .01ms !important;
-      transition-duration: .01ms !important;
+    .player iframe,
+    .player video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: inherit;
     }
-  }
-</style>
 
+    /* Phần tiết lộ người viết thiệp */
+
+    .writer-section {
+      position: relative;
+      margin-top: 22px;
+      text-align: center;
+    }
+
+    #revealWriterButton {
+      width: 100%;
+      min-height: 54px;
+      background: linear-gradient(135deg, #f4d7ff, #c8b6ff);
+      color: #261936;
+      box-shadow: 0 6px 22px #c8b6ff20;
+    }
+
+    #confettiArea {
+      position: absolute;
+      top: 24px;
+      left: 0;
+      width: 100%;
+      height: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 8px;
+      height: 12px;
+      border-radius: 2px;
+      animation: confettiBurst 950ms ease-out forwards;
+    }
+
+    #writerReveal {
+      margin-top: 22px;
+      padding: 24px 16px;
+      border: 1px solid #c8b6ff35;
+      border-radius: 18px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #c8b6ff12, transparent 70%),
+        #c8b6ff08;
+    }
+
+    #writerReveal h3 {
+      margin: 0 0 20px;
+      font-size: 1.15rem;
+      line-height: 1.6;
+    }
+
+    #writerImage {
+      display: block;
+      width: min(100%, 240px);
+      max-height: 320px;
+      object-fit: cover;
+      margin: 0 auto;
+      border: 2px solid #c8b6ff80;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px #0004;
+    }
+
+    #writerName {
+      margin: 16px 0 0;
+      color: var(--accent);
+      font-size: 1.15rem;
+      font-weight: 750;
+      line-height: 1.6;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .hint {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #ffffff12;
+      color: var(--muted);
+      font-size: .83rem;
+      line-height: 1.75;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes confettiBurst {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(0deg) scale(.4);
+      }
+      15% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform:
+          translate(var(--dx), var(--dy))
+          rotate(var(--rotation))
+          scale(1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 12px;
+        place-items: start center;
+      }
+
+      main {
+        padding: 25px 20px;
+        border-radius: 23px;
+      }
+
+      .intro {
+        margin-bottom: 23px;
+      }
+
+      form {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      input,
+      form button {
+        width: 100%;
+        min-height: 52px;
+      }
+
+      #result {
+        margin-top: 20px;
+      }
+
+      #videoTitle {
+        font-size: 1.15rem;
+      }
+
+      .player {
+        border-radius: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <main>
-    <p class="eyebrow">Học sinh được yêu cầu thực hiện bài khảo sát.</p>
+    <p class="eyebrow">
+      Học sinh được yêu cầu thực hiện bài khảo sát.
+    </p>
+
     <h1>Vui lòng nhập tên của bạn.</h1>
-    <p class="intro">Thí sinh vui lòng nhập đúng và đủ họ và tên nếu không sẽ không thể truy cập.</p>
+
+    <p class="intro">
+      Thí sinh vui lòng nhập đúng và đủ họ và tên nếu không sẽ không thể truy cập.
+    </p>
+
     <form id="codeForm">
-      <input id="codeInput" name="code" type="text" placeholder="Nhập tên."
-             autocomplete="off" autocapitalize="words" aria-label="Tên của bạn." maxlength="30" required>
+      <input
+        id="codeInput"
+        name="code"
+        type="text"
+        placeholder="Nhập tên."
+        autocomplete="off"
+        autocapitalize="words"
+        aria-label="Tên của bạn."
+        maxlength="30"
+        required
+      >
       <button type="submit">Bắt đầu ↗</button>
     </form>
+
     <p id="message" role="status" aria-live="polite"></p>
+
     <section id="result" class="hidden" aria-live="polite">
       <h2 id="videoTitle"></h2>
+
       <div class="player" id="player"></div>
+
+      <!-- Nút này chỉ xuất hiện sau khi nhập tên hợp lệ -->
+      <div id="writerSection" class="writer-section hidden">
+        <button type="button" id="revealWriterButton">
+          💌 Ấn để biết người viết lời chúc cho bạn
+        </button>
+
+        <div id="confettiArea" aria-hidden="true"></div>
+
+        <div id="writerReveal" class="hidden">
+          <h3>Người viết thiệp cho bạn là…</h3>
+          <img id="writerImage" src="" alt="Ảnh người viết thiệp">
+          <p id="writerName"></p>
+        </div>
+      </div>
     </section>
-    <p class="hint">Nếu tên chưa đúng, hãy kiểm tra rồi thử lại. Trang này dùng tên của bạn để tổng hợp kết quả khảo sát, không phải hệ thống bảo mật.</p>
+
+    <p class="hint">
+      Nếu tên chưa đúng, hãy kiểm tra rồi thử lại. Trang này dùng tên của bạn
+      để tổng hợp kết quả khảo sát, không phải hệ thống bảo mật.
+    </p>
   </main>
 
   <script>
-    
     const VIDEOS = {
-      "lê an na":  { title: "Tặng An Na 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108995/11A1_-_20.10_-_VIDEO_3.mp4" },
-      "nguyễn lục phương giang":  { title: "Tặng Phương Giang 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108925/11A1_-_20.10_-_VIDEO_7.mp4" },
-      "nguyễn thị huệ":  { title: "Tặng cô Huệ 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108996/11A1_-_20.10_-_VIDEO_2_C%C3%94_HU%E1%BB%86.mp4" },
-      "lê ngọc khanh":  { title: "Tặng Ngọc Khanh 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108929/11A1_-_20.10_-_VIDEO_12.mp4" },
-      "nguyễn thùy lâm":  { title: "Tặng Thùy Lâm 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108976/11A1_-_20.10_-_VIDEO_13.mp4" },
-      "đỗ phương nhung":  { title: "Tặng Phương Nhung 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108953/11A1_-_20.10_-_VIDEO_17.mp4" },
-      "nguyễn bảo ngọc":  { title: "Tặng Nguyễn Bảo Ngọc 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108960/11A1_-_20.10_-_VIDEO_10.mp4" },
-      "phạm huỳnh bảo ngọc":  { title: "Tặng Phạm Huỳnh Bảo Ngọc 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108942/11A1_-_20.10_-_VIDEO_19.mp4" },
-      "phạm hoàng bảo như":  { title: "Tặng Bảo Như 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108975/11A1_-_20.10_-_VIDEO_15.mp4" },
-      "nguyễn ngọc quỳnh như":  { title: "Tặng Quỳnh Như 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108937/11A1_-_20.10_-_VIDEO_20.mp4" },
-      "vương minh châu":  { title: "Tặng Minh Châu 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108968/11A1_-_20.10_-_VIDEO_14.mp4" },
-      "châu nguyễn uyên thanh":  { title: "Tặng Uyên Thanh 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792081259/11A1_-_20.10_-_VIDEO_1.mp4" },
-      "nguyễn khánh tâm":  { title: "Tặng Khánh Tâm",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108969/11A1_-_20.10_-_VIDEO_9.mp4" },
-      "phạm huỳnh song thư":  { title: "Tặng Song Thư 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108970/11A1_-_20.10_-_VIDEO_8.mp4" },
-      "vương ánh tây":  { title: "Tặng Ánh Tây 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108936/11A1_-_20.10_-_VIDEO_18.mp4" },
-      "trần ngọc tú vy":  { title: "Tặng Tú Vy 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108951/11A1_-_20.10_-_VIDEO_16.mp4" },
-      "nguyễn khánh vy":  { title: "Tặng Khánh Vy 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108928/11A1_-_20.10_-_VIDEO_11.mp4" },
-      "nguyễn trúc vy":  { title: "Tặng Trúc Vy 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108990/11A1_-_20.10_-_VIDEO_4.mp4" },
-      "đỗ hoàng yến":  { title: "Tặng Hoàng Yến 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108997/11A1_-_20.10_-_VIDEO_5.mp4" },
-      "uông hoàng yến vy":  { title: "Tặng Yến Vy 💌",  type: "mp4", url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108991/11A1_-_20.10_-_VIDEO_6.mp4" }
+      "lê an na": {
+        title: "Tặng An Na 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108995/11A1_-_20.10_-_VIDEO_3.mp4",
+        writer: "Đông Quân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162110/z7172889925033_878ab72ba90d33d2dfef1fa8ccfd1f0d.jpg"
+      },
+
+      "nguyễn lục phương giang": {
+        title: "Tặng Phương Giang 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108925/11A1_-_20.10_-_VIDEO_7.mp4",
+        writer: "Hoàng Huân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162480/z7172888840137_d942575b926b03da0c9b3be8bdd45c1f.jpg"
+      },
+
+      "nguyễn thị huệ": {
+        title: "Tặng cô Huệ 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108996/11A1_-_20.10_-_VIDEO_2_C%C3%94_HU%E1%BB%86.mp4",
+        writer: "Đông Quân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162110/z7172889925033_878ab72ba90d33d2dfef1fa8ccfd1f0d.jpg"
+      },
+
+      "lê ngọc khanh": {
+        title: "Tặng Ngọc Khanh 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108929/11A1_-_20.10_-_VIDEO_12.mp4",
+        writer: "Tấn Đạt",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792163276/dat_54.jpg"
+      },
+
+      "nguyễn thùy lâm": {
+        title: "Tặng Thùy Lâm 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108976/11A1_-_20.10_-_VIDEO_13.mp4",
+        writer: "Tấn Đạt",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792163276/dat_54.jpg"
+      },
+
+      "đỗ phương nhung": {
+        title: "Tặng Phương Nhung 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108953/11A1_-_20.10_-_VIDEO_17.mp4",
+        writer: "Hoàng Phương",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792164473/815087946_2383979728675286_2099414970881777693_n.jpg"
+      },
+
+      "nguyễn bảo ngọc": {
+        title: "Tặng Nguyễn Bảo Ngọc 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108960/11A1_-_20.10_-_VIDEO_10.mp4",
+        writer: "Đức Hùng",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162846/846032265_945981228203511_1944205288719410044_n.jpg"
+      },
+
+      "phạm huỳnh bảo ngọc": {
+        title: "Tặng Phạm Huỳnh Bảo Ngọc 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108942/11A1_-_20.10_-_VIDEO_19.mp4",
+        writer: "Gia Lộc",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792164634/Lololo.jpg"
+      },
+
+      "phạm hoàng bảo như": {
+        title: "Tặng Bảo Như 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108975/11A1_-_20.10_-_VIDEO_15.mp4",
+        writer: "Quý Thanh",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792164435/tha.jpg"
+      },
+
+      "nguyễn ngọc quỳnh như": {
+        title: "Tặng Quỳnh Như 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108937/11A1_-_20.10_-_VIDEO_20.mp4",
+        writer: "Gia Lộc",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792164634/Lololo.jpg"
+      },
+
+      "vương minh châu": {
+        title: "Tặng Minh Châu 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108968/11A1_-_20.10_-_VIDEO_14.mp4",
+        writer: "Minh Kiên",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792163862/841644343_1813122436546283_1594891482541346727_n.png"
+      },
+
+      "châu nguyễn uyên thanh": {
+        title: "Tặng Uyên Thanh 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792081259/11A1_-_20.10_-_VIDEO_1.mp4",
+        writer: "Đông Quân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162110/z7172889925033_878ab72ba90d33d2dfef1fa8ccfd1f0d.jpg"
+      },
+
+      "nguyễn khánh tâm": {
+        title: "Tặng Khánh Tâm",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108969/11A1_-_20.10_-_VIDEO_9.mp4",
+        writer: "Tuấn Anh",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162781/8C7C5511_ban_5-4.jpg"
+      },
+
+      "phạm huỳnh song thư": {
+        title: "Tặng Song Thư 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108970/11A1_-_20.10_-_VIDEO_8.mp4",
+        writer: "Tuấn Anh",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162781/8C7C5511_ban_5-4.jpg"
+      },
+
+      "vương ánh tây": {
+        title: "Tặng Ánh Tây 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108936/11A1_-_20.10_-_VIDEO_18.mp4",
+        writer: "Minh Kiên",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792163862/841644343_1813122436546283_1594891482541346727_n.png"
+      },
+
+      "trần ngọc tú vy": {
+        title: "Tặng Tú Vy 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108951/11A1_-_20.10_-_VIDEO_16.mp4",
+        writer: "Hoàng Phương",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792164473/815087946_2383979728675286_2099414970881777693_n.jpg"
+      },
+
+      "nguyễn khánh vy": {
+        title: "Tặng Khánh Vy 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108928/11A1_-_20.10_-_VIDEO_11.mp4",
+        writer: "Gia Huy",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792163011/gia_wuy_54.jpg"
+      },
+
+      "nguyễn trúc vy": {
+        title: "Tặng Trúc Vy 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108990/11A1_-_20.10_-_VIDEO_4.mp4",
+        writer: "Đông Quân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162110/z7172889925033_878ab72ba90d33d2dfef1fa8ccfd1f0d.jpg"
+      },
+
+      "đỗ hoàng yến": {
+        title: "Tặng Hoàng Yến 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108997/11A1_-_20.10_-_VIDEO_5.mp4",
+        writer: "Hoàng Huân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162480/z7172888840137_d942575b926b03da0c9b3be8bdd45c1f.jpg"
+      },
+
+      "uông hoàng yến vy": {
+        title: "Tặng Yến Vy 💌",
+        type: "mp4",
+        url: "https://res.cloudinary.com/uwjlrtuy/video/upload/v1792108991/11A1_-_20.10_-_VIDEO_6.mp4",
+        writer: "Hoàng Huân",
+        writerImage: "https://res.cloudinary.com/uwjlrtuy/image/upload/v1792162480/z7172888840137_d942575b926b03da0c9b3be8bdd45c1f.jpg"
+      }
     };
 
     const form = document.getElementById("codeForm");
@@ -287,7 +555,78 @@
     const title = document.getElementById("videoTitle");
     const player = document.getElementById("player");
 
+    const writerSection = document.getElementById("writerSection");
+    const revealWriterButton = document.getElementById("revealWriterButton");
+    const writerReveal = document.getElementById("writerReveal");
+    const writerName = document.getElementById("writerName");
+    const writerImage = document.getElementById("writerImage");
+    const confettiArea = document.getElementById("confettiArea");
+
+    let currentVideo = null;
+    let writerRevealed = false;
+
+    function resetWriter() {
+      currentVideo = null;
+      writerRevealed = false;
+
+      writerSection.classList.add("hidden");
+      writerReveal.classList.add("hidden");
+
+      writerImage.removeAttribute("src");
+      writerName.textContent = "";
+      confettiArea.replaceChildren();
+
+      revealWriterButton.disabled = false;
+      revealWriterButton.textContent =
+        "💌 Ấn để biết người viết lời chúc cho bạn";
+    }
+
+    function launchConfetti() {
+      const colors = [
+        "#c8b6ff",
+        "#ffd6e7",
+        "#fff0a8",
+        "#b8f2e6",
+        "#ffffff"
+      ];
+
+      confettiArea.replaceChildren();
+
+      for (let i = 0; i < 32; i++) {
+        const piece = document.createElement("span");
+        piece.className = "confetti-piece";
+
+        piece.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.setProperty(
+          "--dx",
+          `${Math.random() * 300 - 150}px`
+        );
+
+        piece.style.setProperty(
+          "--dy",
+          `${50 + Math.random() * 130}px`
+        );
+
+        piece.style.setProperty(
+          "--rotation",
+          `${Math.random() * 720 - 360}deg`
+        );
+
+        piece.style.animationDelay = `${Math.random() * 120}ms`;
+
+        confettiArea.appendChild(piece);
+      }
+
+      window.setTimeout(() => {
+        confettiArea.replaceChildren();
+      }, 1300);
+    }
+
     function showVideo(code) {
+      resetWriter();
+
       const video = VIDEOS[code];
       player.replaceChildren();
 
@@ -303,31 +642,37 @@
         return;
       }
 
+      currentVideo = video;
       title.textContent = video.title;
 
       if (video.type === "mp4") {
-  const media = document.createElement("video");
+        const media = document.createElement("video");
 
-  media.controls = true;
-  media.playsInline = true;
-  media.preload = "metadata";
-  media.autoplay = true;
-  media.src = video.url;
+        media.controls = true;
+        media.playsInline = true;
+        media.preload = "metadata";
+        media.autoplay = true;
+        media.src = video.url;
 
-  player.appendChild(media);
+        player.appendChild(media);
 
-  const playPromise = media.play();
-  if (playPromise !== undefined) {
-    playPromise.catch((error) => {
-      console.log("Trình duyệt yêu cầu người xem bấm phát:", error);
-    });
-  }
+        const playPromise = media.play();
+
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log(
+              "Trình duyệt yêu cầu người xem bấm phát:",
+              error
+            );
+          });
+        }
       } else {
         const frame = document.createElement("iframe");
 
         frame.src = video.url;
         frame.title = video.title;
-        frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         frame.allowFullscreen = true;
         frame.referrerPolicy = "strict-origin-when-cross-origin";
 
@@ -335,13 +680,48 @@
       }
 
       message.textContent = "";
+      writerSection.classList.remove("hidden");
       result.classList.remove("hidden");
-      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      result.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
     }
+
+    revealWriterButton.addEventListener("click", () => {
+      if (!currentVideo || writerRevealed) return;
+
+      if (!currentVideo.writer || !currentVideo.writerImage) {
+        message.textContent =
+          "Thông tin người viết thiệp chưa được thiết lập.";
+        return;
+      }
+
+      writerRevealed = true;
+
+      writerName.textContent = currentVideo.writer;
+      writerImage.src = currentVideo.writerImage;
+      writerImage.alt = `Ảnh của ${currentVideo.writer}`;
+
+      writerReveal.classList.remove("hidden");
+      revealWriterButton.disabled = true;
+      revealWriterButton.textContent = "💌 Bạn đã khám phá bí mật!";
+
+      launchConfetti();
+
+      writerReveal.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      showVideo(input.value.trim().toLocaleLowerCase("vi"));
+
+      showVideo(
+        input.value.trim().toLocaleLowerCase("vi")
+      );
     });
   </script>
 </body>
