@@ -624,10 +624,19 @@
       }, 1300);
     }
 
+    function normalizeName(name) {
+      return name
+        .normalize("NFC")
+        .trim()
+        .toLocaleLowerCase("vi")
+        .replace(/\\s+/g, " ");
+    }
+
     function showVideo(code) {
       resetWriter();
 
-      const video = VIDEOS[code];
+      const video = Object.entries(VIDEOS)
+        .find(([name]) => normalizeName(name) === normalizeName(code))?.[1];
       player.replaceChildren();
 
       if (!video) {
@@ -719,9 +728,7 @@
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      showVideo(
-        input.value.trim().toLocaleLowerCase("vi")
-      );
+      showVideo(normalizeName(input.value));
     });
   </script>
 </body>
